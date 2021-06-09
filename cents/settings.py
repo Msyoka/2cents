@@ -54,6 +54,12 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
 ]
 
+cloudinary.config( 
+    cloud_name = "msyoka37", 
+    api_key = "174158974217617", 
+    api_secret = "7LjgdbpLuseNQnRknQtyQGv8Ua0",  
+)
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
