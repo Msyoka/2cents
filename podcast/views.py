@@ -16,7 +16,7 @@ def index(request):
         podcasts = Podcasts.objects.all()
     except Exception as e:
         raise Http404()
-    return render(request, "index.html", {"podcasts": podcasts})
+    return render(request, "main/index.html", {"podcasts": podcasts})
 
 @login_required(login_url = '/accounts/login/')
 def post(request):
@@ -30,7 +30,7 @@ def post(request):
         return redirect("podcasts")
     else:
         form = PostForm()
-    return render(request, "post.html", {'form':form})
+    return render(request, "main/post.html", {'form':form})
 
 
 '''Ratings/Votings'''
@@ -51,7 +51,7 @@ def profile(request):
         return redirect('profile')
     else:
         form = UpdateForm()
-    return render(request, "profile.html", {'form':form, 'profile':profis, 'podcasts':user_podcasts})
+    return render(request, "main/profile.html", {'form':form, 'profile':profis, 'podcasts':user_podcasts})
 
 def podcast_detail(request,podcast_id):
     try:
@@ -82,7 +82,7 @@ def podcast_detail(request,podcast_id):
             rate.podcast = podcast_id
             #review
             rate.save()
-            return redirect('details', podcast_id)
+            return redirect('podcasts', podcast_id)
     else:
         form = RateForm()
 
@@ -139,7 +139,7 @@ def podcast_detail(request,podcast_id):
     except Exception as e:
         raise Http404()
 
-    return render(request, "details.html", {'podcasts':podcasts, 
+    return render(request, "main/podcast.html", {'podcasts':podcasts, 
                                             'form':form, 
                                             'auth':auth, 
                                             'all':all, 
@@ -153,10 +153,10 @@ def search(request):
         term = request.GET.get('name')
         results = Podcasts.search_podcast(term)
 
-        return render(request,'search.html', {'podcasts':results})
+        return render(request,'main/search.html', {'podcasts':results})
     else:
         message = "You havent searched any podcast"
-        return render(request,'search.html', {'message':message})
+        return render(request,'main/search.html', {'message':message})
 
 @login_required
 def logout(request):
@@ -170,7 +170,7 @@ class PodcastList(APIView):
 
         return Response(serializers.data)
 
-@login_required(login_url='/accounts/login/')
+@login_required(login_url='/registration/login/')
 def apiView(request):
     current_user = request.user
     title = "Api"
