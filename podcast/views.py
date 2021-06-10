@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Projects, Votes, Comments, Profile
+from .models import Podcasts, Votes, Comments, Profile
 from django.http import Http404, HttpResponseRedirect, JsonResponse
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
@@ -7,16 +7,16 @@ from .forms import PostForm,RateForm,ReviewForm,UpdateForm
 from django.contrib.auth import logout as django_logout
 from rest_framework.response import Response
 from rest_framework.views import APIView
-#from .serializer import ProjectSerializer,ProfileSerializer
+from .serializer import PodcastSerializer,ProfileSerializer
 
 # Create your views here.
 def index(request):
     
     try:
-        projects = Projects.objects.all()
+        podcasts = Podcasts.objects.all()
     except Exception as e:
         raise Http404()
-    return render(request, "index.html", {"projects": projects})
+    return render(request, "index.html", {"podcasts": podcasts})
 
 @login_required(login_url = '/accounts/login/')
 def post(request):
@@ -27,7 +27,7 @@ def post(request):
             post = form.save(commit = False)
             post.user = current_user
             post.save()
-        return redirect("projects")
+        return redirect("podcasts")
     else:
         form = PostForm()
     return render(request, "post.html", {'form':form})
@@ -39,7 +39,7 @@ def profile(request):
     current_user = request.user
     try:
         profis = Profile.objects.filter(user = current_user)[0:1]
-        user_projects = Projects.objects.filter(user = current_user)
+        user_podcasts = Podcasts.objects.filter(user = current_user)
     except Exception as e:
         raise  Http404()
     if request.method == 'POST':
@@ -51,12 +51,12 @@ def profile(request):
         return redirect('profile')
     else:
         form = UpdateForm()
-    return render(request, "profile.html", {'form':form, 'profile':profis, 'projects':user_projects})
+    return render(request, "profile.html", {'form':form, 'profile':profis, 'podcasts':user_podcasts})
 
-def project_detail(request,project_id):
+def podcast_detail(request,podcast_id):
     try:
-        projects = Projects.objects.filter(id = project_id)
-        all = Votes.objects.filter(project = project_id)
+        podcasts = Podcasts.objects.filter(id = podcast_id)
+        all = Votes.objects.filter(podcast = podcast_id)
     except Exception as e:
         raise Http404()
     #user single
@@ -79,15 +79,15 @@ def project_detail(request,project_id):
         if form.is_valid():
             rate = form.save(commit = False)
             rate.user = request.user
-            rate.project = project_id
+            rate.podcast = podcast_id
             #review
             rate.save()
-            return redirect('details', project_id)
+            return redirect('details', podcast_id)
     else:
         form = RateForm()
 
     #logic
-    votes = Votes.objects.filter(project = project_id)
+    votes = Votes.objects.filter(podcast = podcast_id)
     usability = []
     design = []
     content = []
@@ -109,7 +109,6 @@ def project_detail(request,project_id):
         average_usa = 0.0
         average_des = 0.0
         average_con = 0.0
-        averageRating = 0.0
 
     '''
     Restricting user to rate only once
@@ -127,25 +126,21 @@ def project_detail(request,project_id):
         if review.is_valid():
             comment = review.save(commit=False)
             comment.user = request.user
-            comment.pro_id = project_id
+            comment.pro_id = podcast_id
             comment.save()
 
-            return redirect('details',project_id)
+            return redirect('details',podcast_id)
     else:
         review = ReviewForm()
 
     try:
-        user_comment = Comments.objects.filter(pro_id=project_id)
+        user_comment = Comments.objects.filter(pro_id=podcast_id)
 
     except Exception as e:
         raise Http404()
 
-    return render(request, "details.html", {'projects':projects, 
+    return render(request, "details.html", {'podcasts':podcasts, 
                                             'form':form, 
-                                            'usability':average_usa, 
-                                            'design':average_des, 
-                                            'content':average_con, 
-                                            'average':averageRating, 
                                             'auth':auth, 
                                             'all':all, 
                                             'ave':ave, 
@@ -156,11 +151,11 @@ def project_detail(request,project_id):
 def search(request):
     if 'name' in request.GET and request.GET['name']:
         term = request.GET.get('name')
-        results = Projects.search_project(term)
+        results = Podcasts.search_podcast(term)
 
-        return render(request,'search.html', {'projects':results})
+        return render(request,'search.html', {'podcasts':results})
     else:
-        message = "You havent searched any project"
+        message = "You havent searched any podcast"
         return render(request,'search.html', {'message':message})
 
 @login_required
@@ -168,10 +163,10 @@ def logout(request):
     django_logout(request)
     return  HttpResponseRedirect('/')
 
-class ProjectList(APIView):
+class PodcastList(APIView):
     def get(self,request,format=None):
-        all_projects = Projects.objects.all()
-        serializers = ProjectSerializer(all_projects,many=True)
+        all_podcasts = Podcasts.objects.all()
+        serializers = PodcastSerializer(all_podcasts,many=True)
 
         return Response(serializers.data)
 

@@ -8,11 +8,11 @@
     <div class="row d-flex justify-content-center">
         <div class="col-md-6 mt-5">
             <div class="loggi">
-                <h2>Submit Your Project</h2>
-                <form class="form-group" action="/project/post/" method="POST" enctype="multipart/form-data">
+                <h2>Post Your Podcast</h2>
+                <form class="form-group" action="post/" method="POST" enctype="multipart/form-data">
                     {%csrf_token%}
                     {%bootstrap_form form%}
-                    <button class="btn btn-default" type="submit" name="button">Submit Project</button>
+                    <button class="btn btn-default" type="submit" name="button">Submit POdcast</button>
                     <br> <br>
                 </form>
             </div>

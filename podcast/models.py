@@ -13,18 +13,13 @@ class Profile(models.Model):
     class Meta:
         ordering = ['-image']
 
-class Projects(models.Model):
+class Podcasts(models.Model):
     name = models.CharField(max_length=100)
     image = CloudinaryField('image')
-    design = models.IntegerField(default=0)
-    usability = models.IntegerField(default=0)
-    content = models.IntegerField(default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     description = models.TextField(max_length=320)
     link = models.URLField(max_length=60)
     date = models.DateField(auto_now=True)
-    screen1 = CloudinaryField('image')
-    screen2 = CloudinaryField('image')
 
     class Meta:
         ordering = ['-name']
@@ -33,7 +28,7 @@ class Projects(models.Model):
         return self.name 
 
     @classmethod
-    def search_project(cls, word):
+    def search_podcasts(cls, word):
         searched = cls.objects.filter(name__icontains = word)
         return searched
 
@@ -47,4 +42,4 @@ class Votes(models.Model):
     usability = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(10)])
     content = models.PositiveIntegerField(default=0, validators=[MaxValueValidator(10)])
     user = models.ForeignKey(User, on_delete=CASCADE)
-    project = models.IntegerField(default=0)
+    podcast = models.IntegerField(default=0)

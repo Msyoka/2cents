@@ -1,14 +1,14 @@
-from .models import Projects,Votes,Comments,Profile
+from .models import Podcasts,Votes,Comments,Profile
 from django import forms
 
 class RateForm(forms.ModelForm):
     class Meta:
         model=Votes
-        exclude=['user','project']
+        exclude=['user','podcast']
 
 class PostForm(forms.ModelForm):
     class Meta:
-        model=Projects
+        model=Podcasts
         exclude=['user','design','usability','content']
 
 class ReviewForm(forms.ModelForm):
