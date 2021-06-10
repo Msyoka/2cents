@@ -7,7 +7,7 @@ from .forms import PostForm,RateForm,ReviewForm,UpdateForm
 from django.contrib.auth import logout as django_logout
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .serializer import PodcastSerializer,ProfileSerializer
+#from .serializer import PodcastSerializer,ProfileSerializer
 
 # Create your views here.
 def index(request):
