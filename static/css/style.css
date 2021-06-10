@@ -95,7 +95,7 @@ body {
   color: white;
 }
 .i b{
-  color:#2bbbad ;
+  color:#392bbb ;
 }
 .design i{
   color: white;
@@ -114,11 +114,11 @@ body {
   border-width: 2.5px;
 }
 .design a:first-child{
-  border-color: #2bbbad;
+  border-color: #352bbb;
   border-width: 2.5px;
 }
 .design .b{
-  border-color: #786;
+  border-color: rgb(102, 107, 136);
   border-width:2.5px;
 }
 
@@ -131,7 +131,7 @@ body {
   margin: auto;
   width: 60%;
   color: white;
-  border: 2px solid #2bbbad;
+  border: 2px solid #2b2dbb;
   padding: 20px;
 }
 #alert{
@@ -163,10 +163,10 @@ strong{
   border-radius: 80px;
 }
 .dsign a:first-child{
-  border-color: #2bbbad;
+  border-color: #2d2bbb;
 }
 .dsign .b{
-  border-color: #786;
+  border-color: rgb(104, 102, 136);
 }
 .tt{
   font-weight: 500;
@@ -228,8 +228,8 @@ strong{
 }
 .overl button:hover{
   background-color: rgba(255,255,255,0.2) !important;
-  color:#2bbbad !important ;
-  border-color: #2bbbad !important;
+  color:#2d2bbb !important ;
+  border-color: #2b35bb !important;
   border-width: thin !important;
 }
 .overl button{
@@ -255,7 +255,7 @@ strong{
   text-align: center;
   margin: auto;
   margin-top: 10vh;
-  border: 1px solid #2bbbad;
+  border: 1px solid #2b51bb;
   padding: 20px;
   color: white;
   font-weight: 400;
@@ -279,7 +279,7 @@ strong{
 #profile{
   background-color: white !important;
   box-shadow:none!important;
-  color: #2bbbad;
+  color: #412bbb;
   padding:8px;
 }
 .sidePro{
@@ -298,13 +298,13 @@ strong{
   text-transform: capitalize;
   font-weight: 500;
   font-size: 22px;
-  border: 1px solid #2bbbad;
+  border: 1px solid #352bbb;
   border-radius: 80px;
 }
 .loggi{
   width: 90%;
   margin: auto;
-  border: 1px solid #2bbbad;
+  border: 1px solid #352bbb;
   padding: 20px;
   color: black;
   font-weight: 400;
