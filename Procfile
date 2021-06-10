@@ -1,0 +1,1 @@
+web: gunicorn cents.wsgi --log-file -
