@@ -13,6 +13,7 @@ body {
 
 .navbar{
   height: 10vh;
+  color: #2b2dbb;
 }
 
 #submit{
@@ -341,4 +342,7 @@ strong{
 }
 #search{
   display: none;
+}
+#bt-submit{
+  color: #2b2dbb;
 }
